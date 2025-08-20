@@ -71,7 +71,18 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       asChild,
       onClick,
       type = 'button',
-      ...restProps
+      style,
+      id,
+      name,
+      value,
+      form,
+      formAction,
+      formEncType,
+      formMethod,
+      formNoValidate,
+      formTarget,
+      'aria-label': ariaLabel,
+      'aria-describedby': ariaDescribedBy
     },
     ref
   ) => {
@@ -129,7 +140,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     if (variant === 'link' && asChild) {
       return (
-        <span className={buttonClasses} {...restProps}>
+        <span className={buttonClasses} style={style} id={id}>
           {renderContent()}
         </span>
       );
@@ -146,7 +157,18 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         initial="initial"
         whileHover={!isDisabled ? "hover" : undefined}
         whileTap={!isDisabled ? "tap" : undefined}
-        {...restProps}
+        style={style}
+        id={id}
+        name={name}
+        value={value}
+        form={form}
+        formAction={formAction}
+        formEncType={formEncType}
+        formMethod={formMethod}
+        formNoValidate={formNoValidate}
+        formTarget={formTarget}
+        aria-label={ariaLabel}
+        aria-describedby={ariaDescribedBy}
       >
         {/* Ripple effect background */}
         {variant === 'primary' && (
