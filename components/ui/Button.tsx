@@ -75,12 +75,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       id,
       name,
       value,
-      form,
-      formAction,
-      formEncType,
-      formMethod,
-      formNoValidate,
-      formTarget,
       'aria-label': ariaLabel,
       'aria-describedby': ariaDescribedBy
     },
@@ -161,12 +155,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         id={id}
         name={name}
         value={value}
-        form={form}
-        formAction={formAction}
-        formEncType={formEncType}
-        formMethod={formMethod}
-        formNoValidate={formNoValidate}
-        formTarget={formTarget}
         aria-label={ariaLabel}
         aria-describedby={ariaDescribedBy}
       >
