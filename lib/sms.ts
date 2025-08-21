@@ -68,10 +68,23 @@ export async function sendSms(number: string, message: string, type: 'text' | 'u
 
   try {
     const resp = await fetch(url, { method: 'GET' });
-    const text = await resp.text();
-    const code = parseInt(text, 10);
+    const text = (await resp.text()).trim();
+
+    // Provider may return plain code, JSON, or text message; try to extract a code.
+    let extracted: number = Number.NaN;
+    // 3-4 digit code anywhere in the string
+    const match = text.match(/\b(\d{3,4})\b/);
+    if (match) {
+      extracted = parseInt(match[1], 10);
+    } else if (/submitted|success/i.test(text)) {
+      // Heuristic: success text without numeric code
+      extracted = 202;
+    }
+
+    const code = Number.isFinite(extracted) ? extracted : -1;
     const ok = code === 202;
-    return { ok, code: Number.isFinite(code) ? code : -1, message: mapSmsCode(code) };
+    const message = code === -1 ? (text || 'Unknown response') : mapSmsCode(code);
+    return { ok, code, message };
   } catch (err: any) {
     return { ok: false, code: -1, message: err?.message || 'Failed to contact SMS provider' };
   }
